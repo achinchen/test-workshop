@@ -1,6 +1,4 @@
-export function add (a, b) {
-  return a + b
-}
+import { add } from './utils/index'
 
 export function addNTimes (a, b, times) {
   return add(a, b) * times
@@ -13,8 +11,8 @@ export function addWithCallback (a, b, callback) {
 export function addAfter (a, b, time) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(add(a, b))
-    }, time)
+      resolve(add(a, b));
+    }, time);  
   })
 }
 
