@@ -1,4 +1,4 @@
-import { GoogleStrategy, SCOPE } from './index.strategy';
+import { GoogleStrategy, SCOPE } from './index';
 
 const verify = jest.fn();
 const callbackURL = 'https://example.app/callback';
