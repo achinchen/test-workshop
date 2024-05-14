@@ -1,18 +1,7 @@
-import { add, addNTimes, addWithCallback, addAfter, addAfterWithCallback } from './index';
-import * as utilsLevel1 from '.';
+import { addNTimes, addWithCallback, addAfter, addAfterWithCallback } from './index';
+import * as utils from './utils/index';
 
-jest.useFakeTimers();
-
-describe('add', () => {
-  const testCases = [
-    [[1, 2], 3],
-    [[2, 5], 7]
-  ]
-  
-  test.each(testCases)('add(%i, %i) is %i', (input, expected) => {
-    expect(add(...input)).toBe(expected);
-  })
-});
+jest.spyOn(utils, 'add');
 
 describe('addNTimes', () => {
   const testCases = [
@@ -25,10 +14,9 @@ describe('addNTimes', () => {
   })
 
   it('addNTimes calls add', () => {
-    const addSpy = jest.spyOn(utilsLevel1, 'add');
     const input = [2, 2];
     addNTimes(...input, 3);
-    expect(addSpy).toHaveBeenCalledWith(...input);
+    expect(utils.add).toHaveBeenCalledWith(...input);
   });
 });
 
@@ -38,12 +26,12 @@ describe('addWithCallback', () => {
 
   it('calls callback with add result', () => {
     addWithCallback(...input, callback);
-    expect(callback).toHaveBeenCalledWith(add(...input));
+    expect(callback).toHaveBeenCalledWith(utils.add(...input));
   });
 
   it('invokes add', () => {
     addWithCallback(...input, callback);
-    expect(utilsLevel1.add).toHaveBeenCalledWith(...input);
+    expect(utils.add).toHaveBeenCalledWith(...input);
   });
 });
 
@@ -69,13 +57,13 @@ describe('addAfter', () => {
   it('invokes add', async () => {  
     jest.runAllTimersAsync();
     await addAfter(...input, time);
-    expect(utilsLevel1.add).toHaveBeenCalledWith(...input);
+    expect(utils.add).toHaveBeenCalledWith(...input);
   });
 
   it('returns added result', async () => {
     jest.runAllTimersAsync();
     const result = await addAfter(...input, time);
-    expect(result).toBe(add(...input));
+    expect(result).toBe(utils.add(...input));
   });
 });
 
@@ -103,12 +91,12 @@ describe('addAfterWithCallback', () => {
   it('calls callback with add result', () => {
     addAfterWithCallback(...input, time, callback);
     jest.runAllTimers();
-    expect(callback).toHaveBeenCalledWith(add(...input));
+    expect(callback).toHaveBeenCalledWith(utils.add(...input));
   });
 
   it('invokes add', () => {
     addAfterWithCallback(...input, time, callback);
     jest.runAllTimers();
-    expect(utilsLevel1.add).toHaveBeenCalledWith(...input);
+    expect(utils.add).toHaveBeenCalledWith(...input);
   });
 });
