@@ -1,3 +1,5 @@
+import { INITIATED_CELL } from './constants';
+
 export const getCoordinates = ({ x, y }) => {
   return [
     { x: x - 1, y },
